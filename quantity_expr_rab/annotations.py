@@ -6,9 +6,9 @@ from lxml.etree import _Element
 
 from quantity_expr_rab.document_corpus import DocInfo, DATA_LOCATOR, DocumentCorpus
 from quantity_expr_rab.vocab import RabQuantBody, RAB
-from spotterbase.anno_core.annotation import Annotation
-from spotterbase.anno_core.annotation_creator import SpotterRun
-from spotterbase.anno_core.target import FragmentTarget
+from spotterbase.model_core.annotation import Annotation
+from spotterbase.model_core.annotation_creator import SpotterRun
+from spotterbase.model_core.target import FragmentTarget
 from spotterbase.corpora.interface import Document
 from spotterbase.data.zipfilecache import SHARED_ZIP_CACHE
 from spotterbase.rdf import TripleI, Uri

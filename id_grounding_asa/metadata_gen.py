@@ -1,7 +1,7 @@
 import logging
 
 from id_grounding_asa.document_corpus import DocumentCorpus
-from spotterbase.anno_core.sb import SB
+from spotterbase.model_core.sb import SB
 from spotterbase.corpora.arxiv import ArxivUris
 from spotterbase.data.locator import DataDir
 from spotterbase.rdf import FileSerializer

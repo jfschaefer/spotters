@@ -1,17 +1,17 @@
 import datetime
 import itertools
 import re
+
 from lxml.etree import Element, _Element
 
-from spotterbase.anno_core.annotation import Annotation
-from spotterbase.anno_core.annotation_creator import SpotterRun
-from spotterbase.anno_core.sb import SB
-from spotterbase.anno_core.tag_body import SimpleTagBody, Tag, TagSet
-from spotterbase.anno_core.target import FragmentTarget
 from spotterbase.corpora.interface import Document
+from spotterbase.model_core.annotation import Annotation
+from spotterbase.model_core.annotation_creator import SpotterRun
+from spotterbase.model_core.sb import SB
+from spotterbase.model_core.tag_body import SimpleTagBody, Tag, TagSet
+from spotterbase.model_core.target import FragmentTarget
 from spotterbase.rdf import TripleI
-from spotterbase.selectors.dom_range import DomPoint
-from spotterbase.selectors.selector_converter import SelectorConverter
+from spotterbase.selectors.dom_range import DomRange
 from spotterbase.spotters.spotter import Spotter, SpotterContext, UriGeneratorMixin
 # import load_env_normalization
 from . import load_env_normalization
@@ -78,7 +78,7 @@ class AmsParaSpotter(UriGeneratorMixin, Spotter):
 
         node: _Element
         tree = document.get_html_tree(cached=True)
-        selector_converter = SelectorConverter(document.get_uri(), tree.getroot())
+        selector_converter = document.get_selector_converter()
         uri_generator = self.get_uri_generator_for(document)
         for node in tree.iter(tag=Element):
             c = node.get('class')
@@ -105,7 +105,7 @@ class AmsParaSpotter(UriGeneratorMixin, Spotter):
 
             uri = next(uri_generator)
             target = FragmentTarget(uri('target'), document.get_uri(),
-                                    selector_converter.dom_to_selectors(DomPoint(node).as_range()))
+                                    selector_converter.dom_to_selectors(DomRange.from_node(node)))
             yield from target.to_triples()
             yield from Annotation(
                 uri=uri('anno'),

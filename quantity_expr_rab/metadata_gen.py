@@ -1,7 +1,7 @@
 import logging
 
 from quantity_expr_rab.document_corpus import DocumentCorpus, iter_doc_info
-from spotterbase.anno_core.sb import SB
+from spotterbase.model_core.sb import SB
 from spotterbase.corpora.arxiv import ArxivUris
 from spotterbase.data.locator import DataDir
 from spotterbase.rdf import FileSerializer

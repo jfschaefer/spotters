@@ -9,9 +9,9 @@ import urllib.parse
 
 from id_grounding_asa.document_corpus import DocumentCorpus
 from id_grounding_asa.vocab import AsaGroundingBody, ASA
-from spotterbase.anno_core.annotation import Annotation
-from spotterbase.anno_core.tag_body import Tag, TagSet, SimpleTagBody
-from spotterbase.anno_core.target import FragmentTarget
+from spotterbase.model_core.annotation import Annotation
+from spotterbase.model_core.tag_body import Tag, TagSet, SimpleTagBody
+from spotterbase.model_core.target import FragmentTarget
 from spotterbase.rdf import TripleI, Uri, FileSerializer
 from spotterbase.selectors.dom_range import DomPoint, DomRange
 from spotterbase.utils import config_loader
