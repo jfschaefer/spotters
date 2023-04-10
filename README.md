@@ -8,11 +8,12 @@ This is not part of SpotterBase to
 
 Furthermore, the spotters tend to have a much lower code quality.
 
+## SpotterBase
+
+The spotters in this repository are based on [SpotterBase](https://github.com/jfschaefer/spotterbase).
+
 ## Licenses
 
 Individual spotters may have different licenses.
 If a spotter does not have a license or you need a different one, please reach out/make an issue.
-
-
-TODO: Link SpotterBase documentation
 

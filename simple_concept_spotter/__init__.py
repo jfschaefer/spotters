@@ -1,0 +1,1 @@
+from .spotter import SimpleConceptSpotter

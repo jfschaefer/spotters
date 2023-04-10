@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from omp2_concept_spotter.omp2_concepts import STEMMER, get_lookup_tree
+from simple_concept_spotter.omp2_concepts import STEMMER
+from simple_concept_spotter.wikidata_concepts import get_lookup_tree
 from spotterbase.corpora.interface import Document
 from spotterbase.dnm.simple_dnm_factory import ARXMLIV_STANDARD_DNM_FACTORY
 from spotterbase.dnm_nlp.sentence_tokenizer import sentence_tokenize
@@ -16,8 +17,8 @@ from spotterbase.spotters.spotter import UriGeneratorMixin, Spotter, SpotterCont
 from spotterbase.utils import config_loader
 
 
-class OmpConceptSpotter(UriGeneratorMixin, Spotter):
-    spotter_short_id = 'ompconcept'
+class SimpleConceptSpotter(UriGeneratorMixin, Spotter):
+    spotter_short_id = 'simpleconcept'
 
     @classmethod
     def setup_run(cls, **kwargs) -> tuple[SpotterContext, TripleI]:
@@ -25,7 +26,7 @@ class OmpConceptSpotter(UriGeneratorMixin, Spotter):
 
         return ctx, SpotterRun(
             uri=ctx.run_uri,
-            spotter_uri=SBX.NS['ompconceptspotter'],
+            spotter_uri=SBX.NS['simpleconceptspotter'],
             spotter_version='0.0.1',
             date=datetime.now(),
         ).to_triples()
@@ -58,7 +59,6 @@ class OmpConceptSpotter(UriGeneratorMixin, Spotter):
                     continue
 
                 # TODO: special treatment for set (check its part-of-speech)
-                print(f'Found {words[i:j]}')
 
                 uri = next(uri_generator)
                 target = FragmentTarget(uri('target'), document.get_uri(),
@@ -77,4 +77,5 @@ class OmpConceptSpotter(UriGeneratorMixin, Spotter):
 if __name__ == '__main__':
     from spotterbase.spotters import spotter_runner
     config_loader.auto()
-    spotter_runner.auto_run_spotter(OmpConceptSpotter)
+    get_lookup_tree()   # it's safer and more efficient to do it before potential multiprocessing
+    spotter_runner.auto_run_spotter(SimpleConceptSpotter)

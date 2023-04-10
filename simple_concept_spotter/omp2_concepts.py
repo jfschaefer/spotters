@@ -18,7 +18,20 @@ from nltk.stem import SnowballStemmer
 logger = logging.getLogger(__name__)
 
 
-STEMMER = SnowballStemmer("english", ignore_stopwords=True)
+# we need something weaker (e.g. resulting and result are different)
+# STEMMER = SnowballStemmer("english", ignore_stopwords=True)
+
+class STEMMER:
+    """ A really hacky stemmer """
+
+    @classmethod
+    def stem(cls, word: str) -> str:
+        if word.endswith('ies'):
+            return cls.stem(word[:-3] + 'y')
+        elif word.endswith('s'):
+            return cls.stem(word[:-1])
+        else:
+            return word
 
 
 @dataclasses.dataclass

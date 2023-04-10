@@ -9,6 +9,7 @@ import urllib.parse
 
 from id_grounding_asa.document_corpus import DocumentCorpus
 from id_grounding_asa.vocab import AsaGroundingBody, ASA
+from spotterbase.data.locator import DataDir
 from spotterbase.model_core.annotation import Annotation
 from spotterbase.model_core.tag_body import Tag, TagSet, SimpleTagBody
 from spotterbase.model_core.target import FragmentTarget
@@ -35,7 +36,7 @@ def triple_gen() -> TripleI:
 
     for document in DocumentCorpus():
         print('processing', document.get_uri())
-        tree = document.get_html_tree(cached=True)
+        # tree = document.get_html_tree(cached=True)
         path = document.path
         with open(path.parent.parent/'data'/(path.name[:-len('.html')] + '_mcdict.json'), 'r') as fp:
             mcdict = json.load(fp)
@@ -65,7 +66,7 @@ def triple_gen() -> TripleI:
             target = FragmentTarget(
                 uri=uri + f'.target.{i}',
                 source=document.get_uri(),
-                selectors=document.get_selector_converter().dom_to_selectors(DomPoint(node).as_range())
+                selectors=document.get_selector_converter().dom_to_selectors(DomRange.from_node(node))
             )
             yield from target.to_triples()
             body = AsaGroundingBody(
@@ -125,5 +126,5 @@ def triple_gen() -> TripleI:
 config_loader.auto()
 
 
-with FileSerializer(Path('/tmp/id-grounding-asa-import.ttl.gz')) as serializer:
+with FileSerializer(DataDir.get('id-grounding-asa-import.ttl.gz')) as serializer:
     serializer.add_from_iterable(triple_gen())
