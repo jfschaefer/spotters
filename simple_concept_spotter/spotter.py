@@ -43,13 +43,13 @@ class SimpleConceptSpotter(UriGeneratorMixin, Spotter):
         for sentence in sentence_tokenize(dnm):
             words: list[dnm] = word_tokenize(sentence)
             for i, word in enumerate(words):
-                word = STEMMER.stem(word.string).lower()
+                word = STEMMER.stem(str(word)).lower()
                 if word not in lookup_tree:
                     continue
                 lt = lookup_tree[word]
                 j = i+1
                 while j < len(words):
-                    word = STEMMER.stem(words[j].string).lower()
+                    word = STEMMER.stem(str(words[j])).lower()
                     if word in lt:
                         lt = lt[word]
                         j += 1
@@ -63,7 +63,7 @@ class SimpleConceptSpotter(UriGeneratorMixin, Spotter):
                 uri = next(uri_generator)
                 target = FragmentTarget(uri('target'), document.get_uri(),
                                         selector_converter.dom_to_selectors(
-                                            DomRange(words[i].as_range().to_dom(), words[j-1].as_range().to_dom()))
+                                            DomRange(words[i].to_dom(), words[j-1].to_dom()))
                                         )
                 yield from target.to_triples()
                 yield from Annotation(

@@ -5,6 +5,7 @@ from id_grounding_asa.vocab import ASA
 from spotterbase.corpora.arxiv import ArxivId
 from spotterbase.corpora.arxmliv import ArXMLivCorpus
 from spotterbase.corpora.interface import Corpus, Document, DocumentNotInCorpusException, CannotLocateCorpusDataError
+from spotterbase.corpora.resolver import Resolver
 from spotterbase.data.locator import Locator
 from spotterbase.rdf import Uri
 
@@ -49,3 +50,5 @@ class DocumentCorpus(Corpus):
     def get_uri(self) -> Uri:
         return self.uri
 
+
+Resolver.register_corpus(DocumentCorpus())

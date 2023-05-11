@@ -94,6 +94,7 @@ def triple_gen() -> TripleI:
                         )
                     )
                     yield from sog_tag.to_triples()
+                    yield from sog_target.to_triples()
                     sog_anno = Annotation(
                         uri=uri + f'.anno.sog.{i}',
                         target_uri=sog_target.uri,
@@ -126,5 +127,6 @@ def triple_gen() -> TripleI:
 config_loader.auto()
 
 
-with FileSerializer(DataDir.get('id-grounding-asa-import.ttl.gz')) as serializer:
+# with FileSerializer(DataDir.get('id-grounding-asa-import.ttl.gz')) as serializer:
+with FileSerializer(DataDir.get('/tmp/asa.nt.gz')) as serializer:
     serializer.add_from_iterable(triple_gen())

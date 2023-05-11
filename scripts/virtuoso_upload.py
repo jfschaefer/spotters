@@ -11,9 +11,13 @@ from spotterbase.utils import config_loader
 
 config_loader.auto()
 
-file = Path('/drive/spotterbase/math-warning-first-100000-decls/sdecl.nt.gz')
+# file = Path('/drive/spotterbase/math-warning-first-100000-decls/sdecl.nt.gz')
+# tmpfile = Path('/tmp/spotterbase/extracted.nt')
+# graph = Uri(f'http://localhost:8890/graph/math-warning-first-100000/sdecl')
+
+file = Path('/tmp/asa.nt.gz')
 tmpfile = Path('/tmp/spotterbase/extracted.nt')
-graph = Uri(f'http://localhost:8890/graph/math-warning-first-100000/sdecl')
+graph = Uri(f'http://localhost:8890/asa_id_grounding_data')
 
 endpoint = Virtuoso()
 endpoint.update(f'CLEAR GRAPH {graph:<>}')
@@ -35,7 +39,8 @@ with gzip.open(file, 'rt') as fp:
                 while True:
                     line: str = next(lines)   # type: ignore
                     fp.write(line)
-                    if 'http://purl.org/dc/terms/creator' in line:
+                    # if 'http://purl.org/dc/terms/creator' in line:
+                    if 'Annotation' in line:
                         break
         except StopIteration:
             done = True
