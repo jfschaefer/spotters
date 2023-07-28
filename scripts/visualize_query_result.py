@@ -12,7 +12,7 @@ args = sys.argv[1:-1]
 ConfigLoader().load_from_args(args)
 
 
-with open(sys.argv[1]) as infp, open('/tmp/results.html', 'wb') as outfp:
+with open(sys.argv[-1]) as infp, open('/tmp/results.html', 'wb') as outfp:
     outfp.write(b'<html><body>\n')
     for line in infp:
         print('processing', line)
@@ -37,15 +37,3 @@ with open(sys.argv[1]) as infp, open('/tmp/results.html', 'wb') as outfp:
 
     outfp.write(b'</body></html>\n')
 
-# xpath = uri.split('#')[1]
-#
-# with open('/tmp/doc.html', 'wb') as fp:
-#     tree = doc.get_html_tree(cached=True)
-#
-#     node = tree.xpath(xpath)[0]
-#     while node.tag != 'math':
-#         node = node.getparent()
-#     node.attrib['style'] = 'background: orange'
-#
-#     fp.write(etree.tostring(tree))
-#
